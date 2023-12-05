@@ -7,6 +7,11 @@ pqr3stu8vwx
 a1b2c3d4e5f
 treb7uchet")
 
+(deftest is-number-test
+  (testing "Test if character is number or not"
+    (is (true? (is-number? "1")))
+    (is (false? (is-number? "a")))))
+
 (deftest filter-numbers-test
   (testing "Filter numbers - only first and last number"
     (is (= (filter-numbers "a1b2c3d4e5f") 15))))
