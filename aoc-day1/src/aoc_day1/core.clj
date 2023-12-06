@@ -17,7 +17,3 @@
 
 (defn sum-numbers-string [whole-string]
   (reduce + (filter-numbers-string whole-string)))
-
-(def input (slurp "input.txt"))
-
-(sum-numbers-string input)
