@@ -10,6 +10,44 @@ xtwone3four
 zoneight234
 7pqrstsixteen")
 
+(def test-real-input "five8b
+2733vmmpknvgr
+3oneeighttwo
+twofourfive485
+2fourghsixptk
+5fivezgfgcxbf3five
+eighthtkk5
+qjqpnfs812sevensbjlkzrzczdmsr
+cpxtthree14
+pljnzhchrrqvkncfnfive6four7dzqkfslm9
+dlrczxpfxp1
+sixsix35
+twoxldv5rftbpfivevqtphhxvgzkhbg
+zsjtsvjtlrsdsvqgfouronexhnbgpsl8
+five813
+53eightfourlseven5bvtmzfkqc6
+51two8eightseven
+frfshfjvlhgsjvmxbplkmsm1seven")
+
+(def test-map-real-input {"five8b" 58
+                          "2733vmmpknvgr" 23
+                          "3oneeighttwo" 32
+                          "twofourfive485" 25
+                          "2fourghsixptk" 26
+                          "5fivezgfgcxbf3five" 55
+                          "eighthtkk5" 85
+                          "qjqpnfs812sevensbjlkzrzczdmsr" 87
+                          "cpxtthree14" 34
+                          "pljnzhchrrqvkncfnfive6four7dzqkfslm9" 59
+                          "dlrczxpfxp1" 11
+                          "sixsix35" 65
+                          "twoxldv5rftbpfivevqtphhxvgzkhbg" 25
+                          "zsjtsvjtlrsdsvqgfouronexhnbgpsl8" 48
+                          "five813" 53
+                          "53eightfourlseven5bvtmzfkqc6" 56
+                          "51two8eightseven" 57
+                          "frfshfjvlhgsjvmxbplkmsm1seven" 17})
+
 (deftest is-number-test
   (testing "Test if character is number or not"
     (is (true? (is-number? "1")))
@@ -39,12 +77,15 @@ zoneight234
 
 (deftest sum-numbers-from-sorted-test
   (testing "Sum the numbers from a string with \\n using the sorted array"
-    (is (= (sum-numbers-from-sorted test-input) 281))))
+    (is (= (sum-numbers-from-sorted test-input) 281))
+    (is (= (sum-numbers-from-sorted test-real-input) 816))))
 
 (deftest get-only-numbers-in-string-test
   (testing "Filter number array to get only numbers that show up in the string"
     (is (= (get-only-numbers-in-string "twosixseventhree8") {"six" "6" "three" "3" "two" "2""seven" "7" "8" "8"}))
-    (is (= (get-only-numbers-in-string "eighthree") {"eight" "8", "three" "3"}))))
+    (is (= (get-only-numbers-in-string "eighthree") {"eight" "8", "three" "3"}))
+    (is (= (first (get-only-numbers-in-string "frfshfjvlhgsjvmxbplkmsm1seven")) {"eight" "8", "three" "3"}))
+    (is (= (get-only-numbers-in-string "frfshfjvlhgsjvmxbplkmsm1seven") {"1" "1", "seven" "7"}))))
 
 (deftest get-first-last-sorted-test
   (testing "Get first and last value from sorted map"
@@ -57,8 +98,14 @@ zoneight234
     (is (= (get-first-last-sorted "fiveight") 58))
     (is (= (get-first-last-sorted "sevenine") 79))
     (is (= (get-first-last-sorted "nineight") 98))
-    (is (= (get-first-last-sorted "nineight9") 989))
+    (is (= (get-first-last-sorted "nineight9") 99))
+    (is (= (get-first-last-sorted "frfshfjvlhgsjvmxbplkmsm1seven") 17))
+    (is (= (get-first-last-sorted "5fivezgfgcxbf3five") 55))
     (is (= (get-first-last-sorted "kzqdfqbdztwoseven5twooneightf") 28))))
+
+(deftest get-first-last-sorted-real-input-test
+  (testing "Get first and last value from real input"
+    (doseq [[k v] test-map-real-input] (is (= (get-first-last-sorted k) v)))))
 
 (deftest sort-numbers-by-string-test
   (testing "Sort numbers in number array by the position where they appear in the string"
