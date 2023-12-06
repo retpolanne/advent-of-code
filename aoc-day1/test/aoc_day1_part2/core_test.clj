@@ -21,8 +21,9 @@ zoneight234
     (is (= (filter-numbers "2twonszcpthreeeightsixsevensevendbllrvdtqv") 27))
     (is (= (filter-numbers "752seven") 77))
     (is (= (filter-numbers "2") 22))
-    (is (= (filter-numbers "two") 22))
-    (is (= (filter-numbers "eighthree") 83))))
+    (is (= (filter-numbers "two") 22))))
+    ;; this one is glitchy but we changed the approach
+    ;;(is (= (filter-numbers "eighthree") 83))
 
 (deftest filter-numbers-test
   (testing "Filter numbers - only first and last number"
@@ -36,15 +37,33 @@ zoneight234
   (testing "Sum the numbers from a string with \\n"
     (is (= (sum-numbers-array test-input) 281))))
 
+(deftest sum-numbers-from-sorted-test
+  (testing "Sum the numbers from a string with \\n using the sorted array"
+    (is (= (sum-numbers-from-sorted test-input) 281))))
+
 (deftest get-only-numbers-in-string-test
   (testing "Filter number array to get only numbers that show up in the string"
-    (is (= (get-only-numbers-in-string "twosixseventhree") {"six" "6", "three" "3", "two" "2", "seven" "7"}))
+    (is (= (get-only-numbers-in-string "twosixseventhree8") {"six" "6" "three" "3" "two" "2""seven" "7" "8" "8"}))
     (is (= (get-only-numbers-in-string "eighthree") {"eight" "8", "three" "3"}))))
+
+(deftest get-first-last-sorted-test
+  (testing "Get first and last value from sorted map"
+    (is (= (get-first-last-sorted "eighthree") 83))
+    (is (= (get-first-last-sorted "oneight") 18))
+    (is (= (get-first-last-sorted "twone") 21))
+    (is (= (get-first-last-sorted "eightwo") 82))
+    (is (= (get-first-last-sorted "eighthree") 83))
+    (is (= (get-first-last-sorted "threeight") 38))
+    (is (= (get-first-last-sorted "fiveight") 58))
+    (is (= (get-first-last-sorted "sevenine") 79))
+    (is (= (get-first-last-sorted "nineight") 98))
+    (is (= (get-first-last-sorted "nineight9") 989))
+    (is (= (get-first-last-sorted "kzqdfqbdztwoseven5twooneightf") 28))))
 
 (deftest sort-numbers-by-string-test
   (testing "Sort numbers in number array by the position where they appear in the string"
-    (is (= (sort-numbers-by-string "eightwo3") {"eight" "8" "two" "2"}))
-    (is (= (sort-numbers-by-string "zoneight234") {"one" "1" "eight" "8"}))))
+    (is (= (sort-numbers-by-string "eightwo3") {"eight" "8" "two" "2" "3" "3"}))
+    (is (= (sort-numbers-by-string "zoneight234") {"one" "1" "eight" "8" "2" "2", "3" "3", "4" "4"}))))
 
 (deftest change-numbertext-numbers-test
   (testing "Turn number names into numbers"
@@ -57,4 +76,4 @@ zoneight234
     (is (= (change-numbertext-string test-input) ["219" "8wo3" "abc123xyz" "x2ne34" "49872" "z1ight234" "7pqrst6teen"]))))
 
 ;; Opening the file and getting the answer :) 
-(sum-numbers-string (slurp "input.txt"))
+(sum-numbers-from-sorted (slurp "input.txt"))

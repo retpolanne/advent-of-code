@@ -11,7 +11,16 @@
               "six" "6"
               "seven" "7"
               "eight" "8"
-              "nine" "9"})
+              "nine" "9"
+              "1" "1"
+              "2" "2"
+              "3" "3"
+              "4" "4"
+              "5" "5"
+              "6" "6"
+              "7" "7"
+              "8" "8"
+              "9" "9"})
 
 (defn is-number? [character]
   (try
@@ -26,6 +35,13 @@
                          (compare (str/index-of mixed-line key1)
                                   (str/index-of mixed-line key2))))
         (get-only-numbers-in-string mixed-line)))
+
+(defn get-first-last-sorted [mixed-line]
+  (def sorted-numbers (sort-numbers-by-string mixed-line))
+  (Integer/parseInt (str (first (vals sorted-numbers)) (last (vals sorted-numbers)))))
+
+(defn sum-numbers-from-sorted [whole-string]
+  (reduce + (map #(get-first-last-sorted %) (str/split whole-string #"\n"))))
 
 (defn change-numbertext-numbers [mixed-line]
   (reduce #(apply clojure.string/replace %1 %2) mixed-line (sort-numbers-by-string mixed-line)))
