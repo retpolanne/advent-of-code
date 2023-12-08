@@ -73,7 +73,7 @@ frfshfjvlhgsjvmxbplkmsm1seven")
 
 (deftest sum-numbers-string-test
   (testing "Sum the numbers from a string with \\n"
-    (is (= (sum-numbers-array test-input) 281))))
+    (is (= (sum-numbers-from-sorted test-input) 281))))
 
 (deftest sum-numbers-from-sorted-test
   (testing "Sum the numbers from a string with \\n using the sorted array"
@@ -84,7 +84,6 @@ frfshfjvlhgsjvmxbplkmsm1seven")
   (testing "Filter number array to get only numbers that show up in the string"
     (is (= (get-only-numbers-in-string "twosixseventhree8") {"six" "6" "three" "3" "two" "2""seven" "7" "8" "8"}))
     (is (= (get-only-numbers-in-string "eighthree") {"eight" "8", "three" "3"}))
-    (is (= (first (get-only-numbers-in-string "frfshfjvlhgsjvmxbplkmsm1seven")) {"eight" "8", "three" "3"}))
     (is (= (get-only-numbers-in-string "frfshfjvlhgsjvmxbplkmsm1seven") {"1" "1", "seven" "7"}))))
 
 (deftest get-first-last-sorted-test
@@ -111,6 +110,21 @@ frfshfjvlhgsjvmxbplkmsm1seven")
   (testing "Sort numbers in number array by the position where they appear in the string"
     (is (= (sort-numbers-by-string "eightwo3") {"eight" "8" "two" "2" "3" "3"}))
     (is (= (sort-numbers-by-string "zoneight234") {"one" "1" "eight" "8" "2" "2", "3" "3", "4" "4"}))))
+
+(deftest repeated-numbers-test
+  (testing "Returns which number is repeated test"
+    (is (= (repeated-last-number "fiveoh3five" (last (vals (sort-numbers-by-string "fiveoh3five")))) "five"))
+    (is (= (repeated-last-number "fiveoh3" (last (vals (sort-numbers-by-string "fiveoh3five")))) "3"))))
+
+(deftest find-any-missing-last-number-test
+  (testing "Checks if there's a repeated number that we didn't get yet test"
+    (is (= (find-any-missing-last-number "fiveoh3"
+                                         (last (keys (sort-numbers-by-string "fiveoh3")))) "3"))
+    (is (= (find-any-missing-last-number "fiveoh3five"
+                                         (last (keys (sort-numbers-by-string "fiveoh3five")))) "5"))))
+
+(last (keys (sort-numbers-by-string "fiveoh3five")))
+(find-any-missing-last-number "fiveoh3five" "3")
 
 (deftest change-numbertext-numbers-test
   (testing "Turn number names into numbers"

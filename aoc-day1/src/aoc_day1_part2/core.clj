@@ -30,6 +30,19 @@
 (defn get-only-numbers-in-string [mixed-line]
   (select-keys numbers (filter #(str/includes? mixed-line %) (keys numbers))))
 
+(defn repeated-last-number [mixed-line last-item]
+  (def last-index (str/last-index-of mixed-line last-item))
+  (def sub (subs mixed-line last-index))
+  (last (keys (get-only-numbers-in-string sub))))
+
+(defn find-any-missing-last-number [mixed-line last-item]
+  (def repeated-number (repeated-last-number mixed-line last-item))
+  (if (>
+       (str/last-index-of mixed-line repeated-number)
+       (str/last-index-of mixed-line last-item))
+    (get numbers repeated-number)
+    (get numbers last-item)))
+
 (defn sort-numbers-by-string [mixed-line]
   (into (sorted-map-by (fn [key1 key2]
                          (compare (str/index-of mixed-line key1)
@@ -38,7 +51,10 @@
 
 (defn get-first-last-sorted [mixed-line]
   (def sorted-numbers (sort-numbers-by-string mixed-line))
-  (Integer/parseInt (str (first (vals sorted-numbers)) (last (vals sorted-numbers)))))
+  (Integer/parseInt (str (first (vals sorted-numbers))
+                         (find-any-missing-last-number mixed-line (last (keys sorted-numbers))))))
+
+(get-first-last-sorted "eightwo")
 
 (defn sum-numbers-from-sorted [whole-string]
   (reduce + (map #(get-first-last-sorted %) (str/split whole-string #"\n"))))
